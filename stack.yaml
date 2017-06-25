@@ -41,6 +41,7 @@ packages:
 # (e.g., acme-missiles-0.3)
 extra-deps:
 - gf-3.8
+- iso639-0.1.0.3
 
 # Override default flag values for local packages and extra-deps
 flags: {}
