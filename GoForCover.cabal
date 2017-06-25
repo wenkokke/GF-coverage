@@ -13,44 +13,14 @@ build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
 
-library
-  hs-source-dirs:      src
-  exposed-modules:     Lib
-  build-depends:       base >= 4.7 && < 5
-                     , extra
-                     , iso639
-                     , shake
-  default-language:    Haskell2010
-
-executable get-data
-  hs-source-dirs:      .
-  main-is:             get-data.hs
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
-  build-depends:       base
-                     , extra
-                     , GoForCover
-                     , iso639
-                     , shake
-  default-language:    Haskell2010
-
 executable gf-coverage
-  hs-source-dirs:      app
-  main-is:             Main.hs
+  hs-source-dirs:      .
+  main-is:             gf-coverage.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , gf
                      , Glob
-                     , GoForCover
                      , mtl
-  default-language:    Haskell2010
-
-test-suite gf-coverage-test
-  type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
-  main-is:             Spec.hs
-  build-depends:       base
-                     , GoForCover
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 
 source-repository head
