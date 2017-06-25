@@ -6,9 +6,7 @@ import Data.Char (toLower)
 import Data.LanguageCodes
 import Data.List.Extra (splitAtEnd)
 import Development.Shake
-import Development.Shake.Command
 import Development.Shake.FilePath
-import Development.Shake.Util
 import System.Exit (ExitCode(..))
 
 type LangCode = String
