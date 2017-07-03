@@ -14,7 +14,7 @@ import Numeric.Extra (intToDouble)
 import qualified System.Console.Terminal.Size as W
 import System.Directory (doesFileExist)
 import System.FilePath (takeFileName)
-import System.IO (withFile,IOMode(..),hPutStrLn)
+import System.IO (withFile,IOMode(..),hPutStrLn,hFlush,stdout)
 import Text.Printf (printf)
 import qualified PGF2 as GF
 
@@ -45,7 +45,7 @@ translateCorpus pgf g1 g2 fIn fOut = do
   let fnIn  = takeFileName fIn
   let fnOut = takeFileName fOut
   when (fInExist) $ do
-    putStrLn $ "Generate " <> fnOut <> "...\n"
+    putStrLn $ "Generate " <> fnOut <> "..."
     linesIn <- lines <$> readFile fIn
     let total = intToDouble $ length linesIn
     withFile fOut WriteMode $ \hOut -> do
@@ -58,8 +58,9 @@ translateCorpus pgf g1 g2 fIn fOut = do
           blockTodo = barWidth - blockDone                :: Int
           percent   = frac * 100                          :: Double
 
-        putStrLn $ printf "\r[%s%s] %6.2f%%"
+        putStr $ printf "\r[%s%s] %6.2f%%"
           (replicate blockDone '#') (replicate blockTodo '.') percent
+        hFlush stdout
 
         case GF.parse g1 (GF.startCat pgf) line of
           Right ((tr1,_):_) -> hPutStrLn hOut (GF.linearize g2 tr1)
