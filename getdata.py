@@ -5,18 +5,14 @@ from mmap          import mmap
 from os            import makedirs
 from os.path       import getctime,isdir,isfile,join
 from subprocess    import call
-from tqdm          import tqdm
-from nltk.tokenize import word_tokenize
-
-import codecs
 
 dataDir = "data"
 dataUrl = "http://opus.lingfil.uu.se"
 corpus = namedtuple('corpus', ['languages', 'dir', 'urlPatn', 'archivePatn', 'filePatn'])
 
 """Languages supported by GF."""
-gf = ["bg", "de", "es", "fi", "fr", "hi", "zh", "sv"]
-gf = set([(l,"en") if l < "en" else ("en",l) for l in gf])
+gf = ["bg", "de", "en", "es", "fi", "fr", "hi", "it", "nl", "sv", "zh"]
+gf = set([(l1,l2) for l1 in gf for l2 in gf if l1 < l2])
 
 """Languages supported by both GF and the Europarl corpus."""
 ep = ["bg", "cs", "da", "de", "el", "en", "es", "et", "fi", "fr",
@@ -59,36 +55,6 @@ def getdata(corpus):
             if not err:
                 call(["unzip", "-oud", corpus.dir, arc])
 
-def tokenizedata(corpus):
-    """Tokenize the data files."""
-    for l1,l2 in corpus.languages:
-        in1 = corpus.filePatn.format(l1,l2,l1)
-        out1 = in1+'.tok'
-        if not (isfile(out1) and getctime(in1) < getctime(out1)):
-            tokenizefile(in1,out1,language=languages.get(alpha2=l1).name.lower())
-        in2 = corpus.filePatn.format(l1,l2,l2)
-        out2 = in2+'.tok'
-        if not (isfile(out2) and getctime(in2) < getctime(out2)):
-            tokenizefile(in2,out2,language=languages.get(alpha2=l2).name.lower())
-
-def tokenizefile(fin,fout,language):
-    print("Generating "+fout)
-    with codecs.open(fin,'r+','utf-8') as hin,\
-         codecs.open(fout,'w','utf-8') as hout:
-        for ln in tqdm(hin, total=numlines(fin)):
-            hout.write(' '.join(word_tokenize(ln, language=language)) + '\n')
-
-def numlines(fn):
-    lines = 0
-    with codecs.open(fn, "r+") as f:
-        buf = mmap(f.fileno(), 0)
-        while buf.readline():
-            lines += 1
-    return lines
-
 if __name__ == "__main__":
     getdata(ep)
     getdata(os)
-    print()
-    tokenizedata(ep)
-    tokenizedata(os)

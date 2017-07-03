@@ -1,7 +1,9 @@
-resolver: lts-8.18
+resolver: lts-8.20
 packages:
 - '.'
+- location: GF/src/runtime/haskell-bind
+  extra-dep: true
 extra-deps:
-- gf-3.8
+- terminal-progress-bar-0.1.1.1
 flags: {}
 extra-package-dbs: []

@@ -18,9 +18,13 @@ executable gf-coverage
   main-is:             gf-coverage.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
-                     , gf
-                     , Glob
-                     , mtl
+                     , containers
+                     , directory
+                     , extra
+                     , filepath
+                     , pgf2-bind
+                     , terminal-progress-bar
+                     , terminal-size
   default-language:    Haskell2010
 
 source-repository head
