@@ -86,16 +86,6 @@ toISO639_1 = go . map toLower . takeEnd 3
     go "ita" = "it"
     go "spa" = "es"
 
-
-{-
-      when (fn1Exist) $ do
-        lns1 <- lines <$> readFile fn1
-        forM_ lns1 $ \ln1 -> do
-          let trs1 = PGF.parse pgf l1 (PGF.startCat pgf) ln1
-          putStrLn $ c1 ++ ": " ++ ln1
-          forM_ trs1 $ \tr1 -> do
-            let out1 = PGF.linearize pgf l2 tr1
-            putStrLn $ c2 ++ ": " ++  out1
 -- -}
 -- -}
 -- -}
